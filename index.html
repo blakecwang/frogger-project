@@ -1,69 +1,23 @@
-<!DOCTYPE HTML>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Blake's Frogger</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
 </head>
 <body>
-	<canvas id="c" width="500" height="500"></canvas>
-	<script>
-		var c = document.querySelector("#c");
-		var ctx = c.getContext("2d");
-		ctx.save();
-
-		// display border
-		// ctx.strokeRect(0,0, c.width, c.height);
-
-		// user inputs
-		var imageSource = "images/ab2.jpg";
-		var upperText1 = "This is a test";
-		var upperText2 = "This is a test";
-		var lowerText1 = "This is a test";
-		var lowerText2 = "This is a test";
-
-		// display image
-		var image = new Image();
-		image.src = imageSource;
-		image.onload = function(){
-			ctx.restore();
-			ctx.drawImage(image, 0,0, c.width, c.height);
-		};
-
-		// set text properties
-		ctx.fillStyle = "white";
-		ctx.strokeStyle = "black";
-		ctx.font = "36pt Impact";
-		ctx.lineWidth = 3;
-		ctx.textAlign = "center";
-		ctx.translate(c.width/2, 0);
-		ctx.save();
-
-		// display upper text
-		ctx.textBaseline = "top";
-		ctx.fillText(upperText1, 0,0);
-		ctx.strokeText(upperText1, 0,0);
-		ctx.translate(0,50);
-		ctx.fillText(upperText2, 0,0);
-		ctx.strokeText(upperText2, 0,0);
-		ctx.restore();
-
-		// display lower text
-		ctx.textBaseline = "bottom";
-		if (lowerText2 === "") {
-			ctx.translate(0, c.height-10);
-		} else {
-			ctx.translate(0, c.height-60);
-		}
-		ctx.fillText(lowerText1, 0,0);
-		ctx.strokeText(lowerText1, 0,0);
-		ctx.translate(0, 50);
-		ctx.fillText(lowerText2, 0,0);
-		ctx.strokeText(lowerText2, 0,0);
-		restore();
-		restore();
-
-
-
-
-	</script>
+	<div class="container">
+		<div id="title" class="row">
+			<h1>Welcome to Blake's Frogger!</h1>
+		</div>
+		<div id="game-area" class="row">
+			<script src="js/resources.js"></script>
+	    	<script src="js/app.js"></script>
+	    	<script src="js/engine.js"></script>
+		</div>
+	</div>
 </body>
 </html>
