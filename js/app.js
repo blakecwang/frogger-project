@@ -1,12 +1,20 @@
-// overall dimension control
+
+
+// text controls
+var level = 1;
+var titleText = "welcome to frogger";
+var levelText = "level " + level;
+$("#title").text(titleText);
+$("#level").text(levelText);
+
+
+// overall dimension controls
 var blockUnit = 100;
 var blockWidth = 5;
 var blockHeight = 6;
 var canvasWidth = blockWidth*blockUnit;
 var canvasHeight = blockHeight*blockUnit;
 
-// score keeper
-var score = 0;
 
 // image controls
 var waterImgSrc = 'images/square-blue.png';
@@ -22,7 +30,7 @@ var enemyX;;
 var enemyY;
 var enemySpeed;
 enemyInit = function() {
-    enemyX = -(canvasWidth + blockUnit) + (Math.random() * canvasWidth);
+    enemyX = -blockUnit + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * 3) + 1));
     enemySpeed = Math.random() * 100 + 100;
 };
@@ -38,6 +46,7 @@ playerInit = function() {
 };
 
 
+// enemy start
 // initialize enemy objects
 var Enemy = function() {
     enemyInit();
@@ -73,12 +82,14 @@ Enemy.prototype.update = function(dt) {
         player.x = playerX;
         player.y = playerY;
 
-        enemyInit();
-        this.x = enemyX;
-        this.y = enemyY;
-        this.speed = enemySpeed;
+        allEnemies = [];
+        for (var i=0; i<enemyCount; i++) {
+            allEnemies.push(new Enemy());
+        }
 
-        score = 0;
+        level = 1;
+        levelText = "level " + level;
+        $("#level").text(levelText);
     }
 };
 
@@ -87,8 +98,9 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+// enemy end
 
-
+// player start
 // initialize player objects
 var Player = function() {
     playerInit();
@@ -124,9 +136,15 @@ Player.prototype.update = function() {
     }
     this.keyPressed = '';
 
-    // if (this.y === 0) {
+    if (this.y === 0) {
+        playerInit();
+        this.x = playerX;
+        this.y = playerY;
 
-    // }
+        level++;
+        levelText = "level " + level;
+        $("#level").text(levelText);
+    }
 };
 
 
@@ -134,21 +152,6 @@ Player.prototype.update = function() {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
-
-// handle keys sent by the event listener
-Player.prototype.handleInput = function(key) {
-    console.info( key + ", ");
-    this.keyPressed = key;
-};
-
-
-// instantiate objects
-var player = new Player();
-var allEnemies = [];
-for (var i=0; i<enemyCount; i++) {
-    allEnemies.push(new Enemy());
-}
 
 
 // listens for key presses
@@ -161,3 +164,23 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+// handle keypresses sent by event listener
+Player.prototype.handleInput = function(key) {
+    console.info( key + ", ");
+    this.keyPressed = key;
+};
+// player end
+
+
+// instantiate objects
+var player = new Player();
+var allEnemies = [];
+for (var i=0; i<enemyCount; i++) {
+    allEnemies.push(new Enemy());
+}
+
+
+
+

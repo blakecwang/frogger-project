@@ -114,17 +114,14 @@ var Engine = (function(global) {
                 roadImgSrc,   // Row 3 of 3 of stone
                 grassImgSrc,   // Row 1 of 2 of grass
                 grassImgSrc    // Row 2 of 2 of grass
-            ],
-            numRows = 6,
-            numCols = 5,
-            row, col;
+            ];
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
+        for (var row = 0; row < blockWidth; row++) {
+            for (var col = 0; col < blockHeight; col++) {
                 /* The drawImage function of the canvas' context element
                  * requires 3 parameters: the image to draw, the x coordinate
                  * to start drawing and the y coordinate to start drawing.
@@ -132,6 +129,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
+                 
                 ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit); // old: col*101, row*83
             }
         }
