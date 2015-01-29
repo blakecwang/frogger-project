@@ -1,20 +1,13 @@
 /* TO DO:
-- make different color artwork for levels
-    - use color filter
-x make level number change
 - make splash screen between level-ups
 - download cool retro font
-- maybe make it grow with level-ups
-- fix magically appearing enemies
-- increase game difficulty with level-ups
+- change game with level-ups
+    - scalability
+    x more cars
+    - different colors
+        - create artwork
+        - make different color artwork for levels
 */
-
-// text controls
-var level = 1;
-var titleText = "welcome to frogger";
-var levelText = "level " + level;
-$("#title").text(titleText);
-$("#level").text(levelText);
 
 
 // color controls
@@ -43,26 +36,39 @@ var enemyImgSrc = 'images/van.png';
 var playerImgSrc = 'images/frog.png';
 
 
+// text controls
+var titleText = "welcome to frogger";
+$("#title").text(titleText);
+var level, levelStart;
+var levelInit = function(lev) {
+    level = lev;
+    $("#level").text("level " + level);
+};
+levelStart = 1;
+levelInit(levelStart);
+
+
 // enemy controls
-var enemyCount = 10;
-var enemyX = -blockUnit + Math.random() * canvasWidth;
-var enemyY;
-var enemySpeed;
-enemyInit = function() {
-    enemyX = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
+var difficultyFactor, enemyCount, enemyX, enemyY, enemySpeed;
+enemyInit = function(lev) {
+    var enemyCount = difficultyFactor * lev;
+    enemyX = -blockUnit + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * 3) + 1));
     enemySpeed = Math.random() * 100 + 100;
 };
+difficultyFactor = 2;
+enemyCount = difficultyFactor * levelStart;
+enemyInit();
+
 
 
 // player controls
-var playerX;
-var playerY;
-var playerIncrement = blockUnit;
+var playerX, playerY, playerIncrement;
 playerInit = function() {
     playerX = (canvasWidth / 2) - (blockUnit / 2);
     playerY = blockUnit * 4;
 };
+playerIncrement = blockUnit;
 
 
 // enemy start
@@ -82,8 +88,8 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
     
     if (this.x > canvasWidth) {
-        enemyInit();
-        this.x = enemyX;
+        enemyInit(level);
+        this.x = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
         this.y = enemyY;
         this.speed = enemySpeed;
     }
@@ -101,14 +107,13 @@ Enemy.prototype.update = function(dt) {
         player.x = playerX;
         player.y = playerY;
 
+        levelInit(levelStart);
+
+        enemyInit(level);
         allEnemies = [];
         for (var i=0; i<enemyCount; i++) {
             allEnemies.push(new Enemy());
         }
-
-        level = 1;
-        levelText = "level " + level;
-        $("#level").text(levelText);
     }
 };
 
@@ -155,14 +160,20 @@ Player.prototype.update = function() {
     }
     this.keyPressed = '';
 
+    // handle level-ups
     if (this.y === 0) {
         playerInit();
         this.x = playerX;
         this.y = playerY;
 
         level++;
-        levelText = "level " + level;
-        $("#level").text(levelText);
+        levelInit(level);
+
+        enemyCount = difficultyFactor * level;
+        allEnemies = [];
+        for (var i=0; i<enemyCount; i++) {
+            allEnemies.push(new Enemy());
+        }
     }
 };
 
