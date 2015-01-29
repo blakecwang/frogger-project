@@ -103,6 +103,23 @@ var Engine = (function(global) {
      * they are flipbooks creating the illusion of animation but in reality
      * they are just drawing the entire screen over and over.
      */
+
+
+    function colorize(lev) {
+        var imgData = ctx.getImageData(0,0, canvasWidth,canvasHeight);
+        for (var i=0; i<imgData.data.length; i+=4) {
+            if (imgData.data[i] === 255
+             && imgData.data[i+1] === 255
+             && imgData.data[i+2] === 255) {
+                imgData.data[i] = colors[lev-1].r;
+                imgData.data[i+1] = colors[lev-1].g;
+                imgData.data[i+2] = colors[lev-1].b;
+            }
+        }
+        ctx.putImageData(imgData, canvasWidth/2,0);
+    }
+
+
     function render() {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
@@ -129,8 +146,9 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                 
+
                 ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit); // old: col*101, row*83
+                colorize(level);
             }
         }
 

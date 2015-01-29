@@ -1,4 +1,13 @@
-
+/* TO DO:
+- make different color artwork for levels
+    - use color filter
+x make level number change
+- make splash screen between level-ups
+- download cool retro font
+- maybe make it grow with level-ups
+- fix magically appearing enemies
+- increase game difficulty with level-ups
+*/
 
 // text controls
 var level = 1;
@@ -6,6 +15,16 @@ var titleText = "welcome to frogger";
 var levelText = "level " + level;
 $("#title").text(titleText);
 $("#level").text(levelText);
+
+
+// color controls
+var white = {"r" : 255, "g" : 255, "b" : 255};
+var green = {"r" : 0, "g" : 255, "b" : 0};
+var yellow = {"r" : 255, "g" : 255, "b" : 0};
+var orange = {"r" : 255, "g" : 255, "b" : 100};
+var red = {"r" : 255, "g" : 0, "b" : 0};
+var blue = {"r" : 0, "g" : 0, "b" : 255};
+var colors = [white, green, yellow, orange, red, blue];
 
 
 // overall dimension controls
