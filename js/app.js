@@ -25,7 +25,7 @@ var blockUnit = 100;
 var blockWidth = 5;
 var blockHeight = 6;
 var canvasWidth = blockWidth*blockUnit;
-var canvasHeight = blockHeight*blockUnit - blockUnit;
+var canvasHeight = blockHeight*blockUnit;
 
 
 // image controls
@@ -53,20 +53,18 @@ var difficultyFactor, enemyCount, enemyX, enemyY, enemySpeed;
 enemyInit = function(lev) {
     var enemyCount = difficultyFactor * lev;
     enemyX = -blockUnit + Math.random() * canvasWidth;
-    enemyY = blockUnit * (Math.floor((Math.random() * 3) + 1));
+    enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
     enemySpeed = Math.random() * 100 + 100;
 };
 difficultyFactor = 2;
 enemyCount = difficultyFactor * levelStart;
-enemyInit();
-
 
 
 // player controls
 var playerX, playerY, playerIncrement;
 playerInit = function() {
     playerX = (canvasWidth / 2) - (blockUnit / 2);
-    playerY = blockUnit * 4;
+    playerY = blockUnit * (blockHeight - 1);
 };
 playerIncrement = blockUnit;
 

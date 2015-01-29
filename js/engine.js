@@ -124,14 +124,13 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                waterImgSrc,   // Top row is water
-                roadImgSrc,   // Row 1 of 3 of stone
-                roadImgSrc,   // Row 2 of 3 of stone
-                roadImgSrc,   // Row 3 of 3 of stone
-                grassImgSrc,   // Row 1 of 2 of grass
-                grassImgSrc    // Row 2 of 2 of grass
-            ];
+        var rowImages = []
+        rowImages.push(waterImgSrc);
+        for (i=0; i<blockHeight-2; i++) {
+            rowImages.push(roadImgSrc);
+        }
+        rowImages.push(grassImgSrc);
+
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -188,6 +187,7 @@ var Engine = (function(global) {
         waterImgSrc,
         grassImgSrc,
         enemyImgSrc,
+        playerImgSrc,
         playerImgSrc
     ]);
     Resources.onReady(init);
