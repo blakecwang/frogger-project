@@ -111,6 +111,7 @@ Enemy.prototype.update = function(dt) {
         levelInit(levelStart);
 
         enemyInit(level);
+        enemyCount = difficultyFactor * level;
         allEnemies = [];
         for (var i=0; i<enemyCount; i++) {
             allEnemies.push(new Enemy());
