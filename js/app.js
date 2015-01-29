@@ -49,7 +49,7 @@ var enemyX = -blockUnit + Math.random() * canvasWidth;
 var enemyY;
 var enemySpeed;
 enemyInit = function() {
-    enemyX = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
+    enemyX = -blockUnit + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * 3) + 1));
     enemySpeed = Math.random() * 100 + 100;
 };
@@ -83,6 +83,7 @@ Enemy.prototype.update = function(dt) {
     
     if (this.x > canvasWidth) {
         enemyInit();
+        enemyX = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
         this.x = enemyX;
         this.y = enemyY;
         this.speed = enemySpeed;

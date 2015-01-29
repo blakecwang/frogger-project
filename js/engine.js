@@ -148,7 +148,7 @@ var Engine = (function(global) {
                  */
 
                 ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit); // old: col*101, row*83
-                colorize(level);
+                //colorize(level);
             }
         }
 
