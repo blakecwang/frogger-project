@@ -45,11 +45,11 @@ var playerImgSrc = 'images/frog.png';
 
 // enemy controls
 var enemyCount = 10;
-var enemyX;;
+var enemyX = -blockUnit + Math.random() * canvasWidth;
 var enemyY;
 var enemySpeed;
 enemyInit = function() {
-    enemyX = -blockUnit + Math.random() * canvasWidth;
+    enemyX = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * 3) + 1));
     enemySpeed = Math.random() * 100 + 100;
 };

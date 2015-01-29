@@ -116,7 +116,7 @@ var Engine = (function(global) {
                 imgData.data[i+2] = colors[lev-1].b;
             }
         }
-        ctx.putImageData(imgData, canvasWidth/2,0);
+        ctx.putImageData(imgData, 0,0);
     }
 
 
