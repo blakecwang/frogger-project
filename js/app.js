@@ -25,7 +25,7 @@ var blockUnit = 100;
 var blockWidth = 5;
 var blockHeight = 6;
 var canvasWidth = blockWidth*blockUnit;
-var canvasHeight = blockHeight*blockUnit;
+var canvasHeight = blockHeight*blockUnit - blockUnit;
 
 
 // image controls
