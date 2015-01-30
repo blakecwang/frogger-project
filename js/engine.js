@@ -110,6 +110,7 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+        imgInit(level);
         var rowImages = []
         rowImages.push(waterImgSrc1);
         for (i=0; i<blockHeight-2; i++) {
@@ -131,7 +132,6 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-
                 ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit, blockUnit,blockUnit); // old: col*101, row*83
             }
         }
@@ -198,7 +198,7 @@ var Engine = (function(global) {
         }
     }
 
-    imgInit(levelStart);
+    imgInit(level);
     Resources.load(allImgSrcArray);
 
     Resources.onReady(init);

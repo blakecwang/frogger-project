@@ -36,37 +36,48 @@ levelInit(levelStart);
 
 
 // image controls
-var roadImgSrc = 'images/road.png';
-var waterImgSrc1 = 'images/water_1_white.png';
-var waterImgSrc2 = 'images/water_2_white.png';
-var waterImgSrc3 = 'images/water_3_white.png';
-var waterImgSrc4 = 'images/water_4_white.png';
-var grassImgSrc = 'images/grass_white.png';
-var carImgSrc = 'images/car_right_white.png';
-var truckImgSrc = 'images/truck_right_white.png';
-var frogImgSrc = 'images/frog_white.png';
-var imgSrcArray = [waterImgSrc1,
-                   waterImgSrc2,
-                   waterImgSrc3,
-                   waterImgSrc4,
-                   grassImgSrc,
-                   carImgSrc,       // car: index 5
-                   truckImgSrc,     // truck index 6
-                   frogImgSrc];
 var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue']
-var imgInit = function(lev) {
-    for (imgSrc in imgSrcArray) {
-        imgSrc.replace('whtie', colorArray[lev-1]);
-    }
+var imgSrcArray = [
+'images/road.png',              // road - index 0
+'images/water_1_white.png',     // water1 - index 1
+'images/water_2_white.png',     // water2 - index 2
+'images/water_3_white.png',     // water3 - index 3
+'images/water_4_white.png',     // water4 - index 4
+'images/grass_white.png',       // graass - index 5
+'images/car_right_white.png',   // right-car - index 6
+'images/truck_right_white.png', // right-truck - index 7
+'images/car_left_white.png',    // left-car - index 8
+'images/truck_left_white.png',  // left-truck - index 9
+'images/frog_white.png']        // frog - index 10
+var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
+    grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
+var pullImages = function() {
+    roadImgSrc = imgSrcArray[0];
+    waterImgSrc1 = imgSrcArray[1];
+    waterImgSrc2 = imgSrcArray[2];
+    waterImgSrc3 = imgSrcArray[3];
+    waterImgSrc4 = imgSrcArray[4];
+    grassImgSrc = imgSrcArray[5];
+    carImgSrc = imgSrcArray[6];
+    truckImgSrc = imgSrcArray[7];
+    frogImgSrc = imgSrcArray[10];
 };
-imgInit(levelStart);
+pullImages();
+var imgInit = function(lev) {
+    for (var i=0; i<imgSrcArray.length; i++) {
+        var str = imgSrcArray[i].replace('white', colorArray[lev-1]);
+        imgSrcArray[i] = str;
+    }
+    pullImages();
+};
+//imgInit(levelStart);
 
 
 // enemy controls
 var difficultyFactor, enemyCount, enemyX, enemyY, enemySpeed, enemyImgSrc;
 enemyInit = function(lev) {
 //    var enemyCount = difficultyFactor * lev;
-    enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 2) + 5];
+    enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 2) + 6];
     enemyX = -blockUnit + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
     enemySpeed = Math.random() * 30 + 30;
@@ -88,6 +99,7 @@ playerIncrement = blockUnit;
 // initialize enemy objects
 var Enemy = function() {
     enemyInit();
+    imgInit(level);
     this.sprite = enemyImgSrc;
     this.x = enemyX;
     this.y = enemyY;
@@ -130,6 +142,7 @@ Enemy.prototype.update = function(dt) {
             player.y = playerY;
 
             levelInit(levelStart);
+            imgInit(levelStart);
 
             enemyInit(level);
             enemyCount = difficultyFactor * level;
@@ -144,6 +157,7 @@ Enemy.prototype.update = function(dt) {
 
 // render enemy objects to screen
 Enemy.prototype.render = function() {
+    imgInit(level);
     if (this.sprite.indexOf("car") != -1) {
         ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
     } else {
@@ -156,7 +170,7 @@ Enemy.prototype.render = function() {
 // initialize player objects
 var Player = function() {
     playerInit();
-    this.sprite = frogImgSrc;
+    this.sprite = imgSrcArray[7];
     this.x = playerX;
     this.y = playerY;
 };
@@ -195,6 +209,7 @@ Player.prototype.update = function() {
         levelInit(level);
 
         imgInit(level);
+        this.sprite = frogImgSrc;
 
         playerInit();
         this.x = playerX;
@@ -211,6 +226,8 @@ Player.prototype.update = function() {
 
 // render player to screen
 Player.prototype.render = function() {
+    imgInit(level);
+    this.sprite = frogImgSrc;
     ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
 };
 
