@@ -105,27 +105,13 @@ var Engine = (function(global) {
      */
 
 
-    function colorize(lev) {
-        var imgData = ctx.getImageData(0,0, canvasWidth,canvasHeight);
-        for (var i=0; i<imgData.data.length; i+=4) {
-            if (imgData.data[i] === 255
-             && imgData.data[i+1] === 255
-             && imgData.data[i+2] === 255) {
-                imgData.data[i] = colors[lev-1].r;
-                imgData.data[i+1] = colors[lev-1].g;
-                imgData.data[i+2] = colors[lev-1].b;
-            }
-        }
-        ctx.putImageData(imgData, 0,0);
-    }
-
 
     function render() {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
         var rowImages = []
-        rowImages.push(waterImgSrc);
+        rowImages.push(waterImgSrc1);
         for (i=0; i<blockHeight-2; i++) {
             rowImages.push(roadImgSrc);
         }
@@ -147,7 +133,6 @@ var Engine = (function(global) {
                  */
 
                 ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit, blockUnit,blockUnit); // old: col*101, row*83
-                //colorize(level);
             }
         }
 
@@ -182,13 +167,16 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+    imgInit(levelStart);
     Resources.load([
         roadImgSrc,
-        waterImgSrc,
+        waterImgSrc1,
         grassImgSrc,
-        enemyImgSrc,
-        playerImgSrc
+        carImgSrc,
+        truckImgSrc,
+        frogImgSrc
     ]);
+
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
