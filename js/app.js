@@ -50,7 +50,7 @@ var imgSrcArray = [
 'images/truck_left_white.png',  // left-truck - index 9
 'images/frog_white.png']        // frog - index 10
 var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
-    grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
+    grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc, waterImgSrc;
 var pullImages = function() {
     roadImgSrc = imgSrcArray[0];
     waterImgSrc1 = imgSrcArray[1];
@@ -61,6 +61,14 @@ var pullImages = function() {
     carImgSrc = imgSrcArray[6];
     truckImgSrc = imgSrcArray[7];
     frogImgSrc = imgSrcArray[10];
+    var loopLength = 1000;
+    var moveWater = function(t) {
+        setTimeout(waterImgSrc = imgSrcArray[1], t/4);
+        setTimeout(waterImgSrc = imgSrcArray[2], t/4);
+        setTimeout(waterImgSrc = imgSrcArray[3], t/4);
+        setTimeout(waterImgSrc = imgSrcArray[4], t/4);
+    };
+    setInterval(moveWater(loopLength), loopLength);
 };
 pullImages();
 var imgInit = function(lev) {
