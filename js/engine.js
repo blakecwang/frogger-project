@@ -146,7 +146,7 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
 
-                ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit); // old: col*101, row*83
+                ctx.drawImage(Resources.get(rowImages[row]), col * blockUnit, row * blockUnit, blockUnit,blockUnit); // old: col*101, row*83
                 //colorize(level);
             }
         }
@@ -187,7 +187,6 @@ var Engine = (function(global) {
         waterImgSrc,
         grassImgSrc,
         enemyImgSrc,
-        playerImgSrc,
         playerImgSrc
     ]);
     Resources.onReady(init);

@@ -1,3 +1,8 @@
+/* 
+    visit url: http://blakecwang.github.io/frogger-project/
+*/
+
+
 /* TO DO:
 - make splash screen between level-ups
 - download cool retro font
@@ -21,19 +26,19 @@ var colors = [white, green, yellow, orange, red, blue];
 
 
 // overall dimension controls
-var blockUnit = 100;
+var blockUnit = 75;
 var blockWidth = 5;
-var blockHeight = 6;
+var blockHeight = 5;
 var canvasWidth = blockWidth*blockUnit;
 var canvasHeight = blockHeight*blockUnit;
 
 
 // image controls
-var waterImgSrc = 'images/square-blue.png';
-var roadImgSrc = 'images/square-black.png';
-var grassImgSrc = 'images/square-yellow.png';
-var enemyImgSrc = 'images/van.png';
-var playerImgSrc = 'images/frog.png';
+var waterImgSrc = 'images/water_1_orange.png';
+var roadImgSrc = 'images/road.png';
+var grassImgSrc = 'images/grass_orange.png';
+var enemyImgSrc = 'images/car_right_orange.png';
+var playerImgSrc = 'images/frog_orange.png';
 
 
 // text controls
@@ -120,7 +125,7 @@ Enemy.prototype.update = function(dt) {
 
 // render enemy objects to screen
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
 };
 // enemy end
 
@@ -180,7 +185,7 @@ Player.prototype.update = function() {
 
 // render player to screen
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
 };
 
 
