@@ -110,7 +110,6 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        imgInit(level);
         var rowImages = []
         rowImages.push(waterImgSrc1);
         for (i=0; i<blockHeight-2; i++) {
@@ -123,8 +122,8 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
-        for (var row = 0; row < blockWidth; row++) {
-            for (var col = 0; col < blockHeight; col++) {
+        for (var row = 0; row < blockHeight; row++) {
+            for (var col = 0; col < blockWidth; col++) {
                 /* The drawImage function of the canvas' context element
                  * requires 3 parameters: the image to draw, the x coordinate
                  * to start drawing and the y coordinate to start drawing.
@@ -198,7 +197,6 @@ var Engine = (function(global) {
         }
     }
 
-    imgInit(level);
     Resources.load(allImgSrcArray);
 
     Resources.onReady(init);

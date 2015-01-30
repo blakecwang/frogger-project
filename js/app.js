@@ -16,9 +16,9 @@
 
 
 // overall dimension controls
-var blockUnit = 75;
-var blockWidth = 5;
-var blockHeight = 5;
+var blockUnit = 50;
+var blockWidth = 7;
+var blockHeight = 7;
 var canvasWidth = blockWidth*blockUnit;
 var canvasHeight = blockHeight*blockUnit;
 
@@ -70,13 +70,11 @@ var imgInit = function(lev) {
     }
     pullImages();
 };
-//imgInit(levelStart);
 
 
 // enemy controls
 var difficultyFactor, enemyCount, enemyX, enemyY, enemySpeed, enemyImgSrc;
 enemyInit = function(lev) {
-//    var enemyCount = difficultyFactor * lev;
     enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 2) + 6];
     enemyX = -blockUnit + Math.random() * canvasWidth;
     enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
@@ -99,7 +97,6 @@ playerIncrement = blockUnit;
 // initialize enemy objects
 var Enemy = function() {
     enemyInit();
-    imgInit(level);
     this.sprite = enemyImgSrc;
     this.x = enemyX;
     this.y = enemyY;
@@ -142,7 +139,6 @@ Enemy.prototype.update = function(dt) {
             player.y = playerY;
 
             levelInit(levelStart);
-            imgInit(levelStart);
 
             enemyInit(level);
             enemyCount = difficultyFactor * level;
@@ -157,7 +153,6 @@ Enemy.prototype.update = function(dt) {
 
 // render enemy objects to screen
 Enemy.prototype.render = function() {
-    imgInit(level);
     if (this.sprite.indexOf("car") != -1) {
         ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
     } else {
@@ -208,8 +203,7 @@ Player.prototype.update = function() {
         level++;
         levelInit(level);
 
-        imgInit(level);
-        this.sprite = frogImgSrc;
+        imgInit(level); // when ommitted, enemies change to green at level 3
 
         playerInit();
         this.x = playerX;
@@ -226,7 +220,6 @@ Player.prototype.update = function() {
 
 // render player to screen
 Player.prototype.render = function() {
-    imgInit(level);
     this.sprite = frogImgSrc;
     ctx.drawImage(Resources.get(this.sprite), this.x,this.y, blockUnit,blockUnit);
 };
