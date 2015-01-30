@@ -37,14 +37,14 @@ levelInit(levelStart);
 
 // image controls
 var roadImgSrc = 'images/road.png';
-var waterImgSrc1 = 'images/water_1_blue.png';
-var waterImgSrc2 = 'images/water_2_blue.png';
-var waterImgSrc3 = 'images/water_3_blue.png';
-var waterImgSrc4 = 'images/water_4_blue.png';
-var grassImgSrc = 'images/grass_blue.png';
-var carImgSrc = 'images/car_right_blue.png';
-var truckImgSrc = 'images/truck_right_blue.png';
-var frogImgSrc = 'images/frog_green.png';
+var waterImgSrc1 = 'images/water_1_white.png';
+var waterImgSrc2 = 'images/water_2_white.png';
+var waterImgSrc3 = 'images/water_3_white.png';
+var waterImgSrc4 = 'images/water_4_white.png';
+var grassImgSrc = 'images/grass_white.png';
+var carImgSrc = 'images/car_right_white.png';
+var truckImgSrc = 'images/truck_right_white.png';
+var frogImgSrc = 'images/frog_white.png';
 var imgSrcArray = [waterImgSrc1,
                    waterImgSrc2,
                    waterImgSrc3,
@@ -56,7 +56,7 @@ var imgSrcArray = [waterImgSrc1,
 var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue']
 var imgInit = function(lev) {
     for (imgSrc in imgSrcArray) {
-        imgSrc.replace('%color%', colorArray[lev-1]);
+        imgSrc.replace('whtie', colorArray[lev-1]);
     }
 };
 imgInit(levelStart);
@@ -229,7 +229,7 @@ document.addEventListener('keyup', function(e) {
 
 // handle keypresses sent by event listener
 Player.prototype.handleInput = function(key) {
-    console.info( key + ", ");
+    console.info(key + ", ");
     this.keyPressed = key;
 };
 // player end

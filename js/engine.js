@@ -167,15 +167,39 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+
+    var allImgSrcString =
+    "car_left_blue.png     grass_red.png           water_1_yellow.png " +
+    "car_left_green.png    grass_white.png         water_2_blue.png " +
+    "car_left_orange.png   grass_yellow.png        water_2_green.png " +
+    "car_left_red.png      road.png                water_2_orange.png " +
+    "car_left_white.png    truck_left_blue.png     water_2_red.png " +
+    "car_left_yellow.png   truck_left_green.png    water_2_white.png " +
+    "car_right_blue.png    truck_left_orange.png   water_2_yellow.png " +
+    "car_right_green.png   truck_left_red.png      water_3_blue.png " +
+    "car_right_orange.png  truck_left_white.png    water_3_green.png " +
+    "car_right_red.png     truck_left_yellow.png   water_3_orange.png " +
+    "car_right_white.png   truck_right_blue.png    water_3_red.png " +
+    "car_right_yellow.png  truck_right_green.png   water_3_white.png " +
+    "frog_blue.png         truck_right_orange.png  water_3_yellow.png " +
+    "frog_green.png        truck_right_red.png     water_4_blue.png " +
+    "frog_orange.png       truck_right_white.png   water_4_green.png " +
+    "frog_red.png          truck_right_yellow.png  water_4_orange.png " +
+    "frog_white.png        water_1_blue.png        water_4_red.png " +
+    "frog_yellow.png       water_1_green.png       water_4_white.png " +
+    "grass_blue.png        water_1_orange.png      water_4_yellow.png " +
+    "grass_green.png       water_1_red.png " +
+    "grass_orange.png      water_1_white.png";
+    var tempArray = allImgSrcString.split(" ");
+    var allImgSrcArray = [];
+    for (var i=0; i<tempArray.length; i++) {
+        if (tempArray[i] != "") {
+            allImgSrcArray.push("images/" + tempArray[i]);
+        }
+    }
+
     imgInit(levelStart);
-    Resources.load([
-        roadImgSrc,
-        waterImgSrc1,
-        grassImgSrc,
-        carImgSrc,
-        truckImgSrc,
-        frogImgSrc
-    ]);
+    Resources.load(allImgSrcArray);
 
     Resources.onReady(init);
 
