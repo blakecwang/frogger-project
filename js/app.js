@@ -112,40 +112,31 @@ Enemy.prototype.update = function(dt) {
         this.speed = enemySpeed;
     }
 
-    //handle collisions
-    var enemyCX=-1000, enemyCX1=-1000, enemyCX2=-1000, 
-        enemyCY=-1000, playerCX=-1000, playerCY=-1000;
+    // handle collisions
+    if (this.y === player.y) {
 
-    if (this.sprite.indexOf("car") != -1) {
-        enemyCX = this.x + blockUnit / 2;
-    } else {
-        enemyCX1 = this.x + blockUnit / 4;
-        enemyCX2 = this.x + 3 * blockUnit / 4;
-    }
-    enemyCY = this.y + blockUnit / 2;
-    playerCX = player.x + blockUnit / 2;
-    playerCY = player.y + blockUnit / 2;
+        var playerCX = player.x + blockUnit / 2;
+        var tooClose;
+        if (this.sprite.indexOf("car") != -1) {
+            tooClose = blockUnit / 2;
+        } else {
+            tooClose = blockUnit;
+        }
+        var enemyCX = this.x + tooClose;
 
-    var distance = function(x1,y1,x2,y2) {
-        return Math.sqrt(Math.pow((x1 - x2), 2)
-               + Math.pow((y1 - y2), 2));
-    };
+        if (Math.abs(enemyCX-playerCX) <= tooClose) {
+            playerInit();
+            player.x = playerX;
+            player.y = playerY;
 
-    if (distance(enemyCX,enemyCY,playerCX,playerCY) <= blockUnit
-        || distance(enemyCX1,enemyCY,playerCX,playerCY) <= blockUnit
-        || distance(enemyCX2,enemyCY,playerCX,playerCY) <= blockUnit) {
+            levelInit(levelStart);
 
-        playerInit();
-        player.x = playerX;
-        player.y = playerY;
-
-        levelInit(levelStart);
-
-        enemyInit(level);
-        enemyCount = difficultyFactor * level;
-        allEnemies = [];
-        for (var i=0; i<enemyCount; i++) {
-            allEnemies.push(new Enemy());
+            enemyInit(level);
+            enemyCount = difficultyFactor * level;
+            allEnemies = [];
+            for (var i=0; i<enemyCount; i++) {
+                allEnemies.push(new Enemy());
+            }
         }
     }
 };
