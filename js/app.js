@@ -23,6 +23,18 @@ var canvasWidth = blockWidth*blockUnit;
 var canvasHeight = blockHeight*blockUnit;
 
 
+// set a loop timer for water movement
+var loopTime = 500;
+var timeIndex = 4;
+setInterval(function(){
+    if (timeIndex != 1) {
+        timeIndex--;
+    } else {
+        timeIndex = 4;
+    }
+}, loopTime/4);
+
+
 // text controls
 var titleText = "welcome to frogger";
 $("#title").text(titleText);

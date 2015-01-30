@@ -111,7 +111,7 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = []
-        rowImages.push(waterImgSrc);
+        rowImages.push(imgSrcArray[timeIndex]);
         for (i=0; i<blockHeight-2; i++) {
             rowImages.push(roadImgSrc);
         }
