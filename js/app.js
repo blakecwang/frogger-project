@@ -5,13 +5,12 @@
 
 /* TO DO:
 - make splash screen between level-ups
-- download cool retro font
+x download cool retro font
 - change game with level-ups
-    - scalability
+    x scalability
     x more cars
     - different colors
-        - create artwork
-        - make different color artwork for levels
+        x create artwork
 */
 
 
@@ -47,6 +46,22 @@ levelStart = 1;
 levelInit(levelStart);
 
 
+var changeTextColor = function(lev) {
+
+    var white = "#FFFFFF";          // index 0
+    var green = "#00C800";          // index 1
+    var yellow = "#E6E600";         // index 2
+    var orange = "#FF8200";         // index 3
+    var red = "#C80000";            // index 4
+    var blue = "#0000C8";           // index 5
+    var colors = [white, green, yellow, orange, red, blue];
+
+    document.getElementById("title").style.color=colors[lev-1];
+    document.getElementById("level").style.color=colors[lev-1];
+}
+
+
+
 // image controls
 var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue']
 var imgSrcArray = [
@@ -62,7 +77,7 @@ var imgSrcArray = [
 'images/truck_left_white.png',  // left-truck - index 9
 'images/frog_white.png']        // frog - index 10
 var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
-    grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc, waterImgSrc;
+    grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
 var pullImages = function() {
     roadImgSrc = imgSrcArray[0];
     waterImgSrc1 = imgSrcArray[1];
@@ -73,14 +88,6 @@ var pullImages = function() {
     carImgSrc = imgSrcArray[6];
     truckImgSrc = imgSrcArray[7];
     frogImgSrc = imgSrcArray[10];
-    var loopLength = 1000;
-    var moveWater = function(t) {
-        setTimeout(waterImgSrc = imgSrcArray[1], t/4);
-        setTimeout(waterImgSrc = imgSrcArray[2], t/4);
-        setTimeout(waterImgSrc = imgSrcArray[3], t/4);
-        setTimeout(waterImgSrc = imgSrcArray[4], t/4);
-    };
-    setInterval(moveWater(loopLength), loopLength);
 };
 pullImages();
 var imgInit = function(lev) {
@@ -160,6 +167,8 @@ Enemy.prototype.update = function(dt) {
 
             levelInit(levelStart);
 
+            changeTextColor(level);
+
             enemyInit(level);
             enemyCount = difficultyFactor * level;
             allEnemies = [];
@@ -223,6 +232,10 @@ Player.prototype.update = function() {
         level++;
         levelInit(level);
 
+        if (level < 6) {
+            changeTextColor(level);
+        }
+        
         imgInit(level); // when ommitted, enemies change to green at level 3
 
         playerInit();
