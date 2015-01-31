@@ -110,6 +110,7 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+
         var rowImages = []
         rowImages.push(imgSrcArray[timeIndex]);
         for (i=0; i<blockHeight-2; i++) {

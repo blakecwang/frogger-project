@@ -63,7 +63,7 @@ var changeTextColor = function(lev) {
 
 
 // image controls
-var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue']
+var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue'];
 var imgSrcArray = [
 'images/road.png',              // road - index 0
 'images/water_1_white.png',     // water1 - index 1
@@ -75,7 +75,7 @@ var imgSrcArray = [
 'images/truck_right_white.png', // right-truck - index 7
 'images/car_left_white.png',    // left-car - index 8
 'images/truck_left_white.png',  // left-truck - index 9
-'images/frog_white.png']        // frog - index 10
+'images/frog_white.png'];       // frog - index 10
 var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
     grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
 var pullImages = function() {
@@ -85,8 +85,10 @@ var pullImages = function() {
     waterImgSrc3 = imgSrcArray[3];
     waterImgSrc4 = imgSrcArray[4];
     grassImgSrc = imgSrcArray[5];
-    carImgSrc = imgSrcArray[6];
-    truckImgSrc = imgSrcArray[7];
+    rCarImgSrc = imgSrcArray[6];
+    rTruckImgSrc = imgSrcArray[7];
+    lCarImgSrc = imgSrcArray[8];
+    lTruckImgSrc = imgSrcArray[9];
     frogImgSrc = imgSrcArray[10];
 };
 pullImages();
@@ -102,12 +104,13 @@ var imgInit = function(lev) {
 // enemy controls
 var difficultyFactor, enemyCount, enemyX, enemyY, enemySpeed, enemyImgSrc;
 enemyInit = function(lev) {
-    enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 2) + 6];
-    enemyX = -blockUnit + Math.random() * canvasWidth;
+    enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 4) + 6];
+    enemyX = -blockUnit + Math.random() * (canvasWidth + 2*blockUnit);
     enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
-    enemySpeed = Math.random() * 30 + 30;
+    enemySpeed = Math.random() * 150 + 100;
 };
 difficultyFactor = 2;
+//enemyDirection = 1;
 enemyCount = difficultyFactor * levelStart;
 
 
@@ -127,7 +130,11 @@ var Enemy = function() {
     this.sprite = enemyImgSrc;
     this.x = enemyX;
     this.y = enemyY;
-    this.speed = enemySpeed;
+    if (this.sprite.indexOf("right") != -1) {
+        this.speed = enemySpeed;
+    } else {
+        this.speed = -enemySpeed;
+    }
 };
 
 
@@ -136,16 +143,17 @@ Enemy.prototype.update = function(dt) {
 
     this.x += this.speed * dt;
     
-    if (this.x > canvasWidth) {
-
+    if (this.speed > 0 && this.x > canvasWidth) {
         enemyInit(level);
-        if (this.sprite.indexOf("car") != -1) {
-            this.x = -(blockUnit + canvasWidth) + Math.random() * canvasWidth;
-        } else {
-            this.x = -(2*blockUnit + canvasWidth) + Math.random() * canvasWidth;
-        }
+        this.x = -(2*blockUnit + canvasWidth) + Math.random() * canvasWidth;
         this.y = enemyY;
-        this.speed = enemySpeed;
+        //this.speed = enemySpeed;
+    }
+    if (this.speed < 0 && this.x < -(2 * blockUnit)) {
+        enemyInit(level);
+        this.x = canvasWidth + Math.random() * canvasWidth;
+        this.y = enemyY;
+        //this.speed = enemySpeed;
     }
 
     // handle collisions
