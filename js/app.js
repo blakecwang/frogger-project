@@ -1,5 +1,5 @@
 /* 
-    visit url: http://blakecwang.github.io/frogger-project/
+    url: http://blakecwang.github.io/frogger-project/
 */
 
 // overall dimension controls
@@ -236,9 +236,7 @@ Player.prototype.update = function() {
         level++;
         levelInit(level);
 
-        if (level < 6) {
-            changeTextColor(level);
-        }
+        changeTextColor(level);
         
         //imgInit(level); // when ommitted, enemies change to green at level 3
 
