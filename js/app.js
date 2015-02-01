@@ -48,20 +48,17 @@ var levelInit = function(lev) {
 levelStart = 1;
 levelInit(levelStart);
 
-
+var white = "#FFFFFF";          // index 0
+var green = "#00C800";          // index 1
+var yellow = "#E6E600";         // index 2
+var orange = "#FF8200";         // index 3
+var red = "#C80000";            // index 4
+var blue = "#0000C8";           // index 5
+var colors = [white, green, yellow, orange, red, blue];
 var changeTextColor = function(lev) {
-
-    var white = "#FFFFFF";          // index 0
-    var green = "#00C800";          // index 1
-    var yellow = "#E6E600";         // index 2
-    var orange = "#FF8200";         // index 3
-    var red = "#C80000";            // index 4
-    var blue = "#0000C8";           // index 5
-    var colors = [white, green, yellow, orange, red, blue];
-
     document.getElementById("title").style.color=colors[lev-1];
     document.getElementById("level").style.color=colors[lev-1];
-}
+};
 
 
 
@@ -134,16 +131,16 @@ playerIncrement = blockUnit;
 // enemy start
 // initialize enemy objects
 var Enemy = function() {
-    imgInit(level);
-    enemyInit();
-    this.sprite = enemyImgSrc;
-    this.x = enemyX;
-    this.y = enemyY;
-    if (this.sprite.indexOf("right") != -1) {
-        this.speed = enemySpeed;
-    } else {
-        this.speed = -enemySpeed;
-    }
+        imgInit(level);
+        enemyInit();
+        this.sprite = enemyImgSrc;
+        this.x = enemyX;
+        this.y = enemyY;
+        if (this.sprite.indexOf("right") != -1) {
+            this.speed = enemySpeed;
+        } else {
+            this.speed = -enemySpeed;
+        }
 };
 
 
@@ -246,10 +243,11 @@ Player.prototype.update = function() {
 
     // handle level-ups
     if (this.y === 0) {
+
         if (level < 6) {
             level++;
-            levelInit(level);
 
+            levelInit(level);
             changeTextColor(level);
 
             playerInit();
@@ -264,24 +262,28 @@ Player.prototype.update = function() {
         } else {
             stopGame = true;
 
-            // setInterval(function() {
+            var colorIndex = 1;
+            setInterval(function() {
 
-            // })
+                ctx.drawImage(Resources.get('images/frog_' + colorArray[colorIndex]),
+                    canvasWidth/2-canvasHeight/2,0, canvasHeight,canvasHeight);
+                
+                if (colorIndex < 5) {
+                    colorIndex++;
+                } else {
+                    colorIndex = 1;
+                }
 
-            ctx.drawImage(Resources.get('images/frog_white.png'),
-                canvasWidth/2-canvasHeight/2,0, canvasHeight,canvasHeight);
-            ctx.font = '40pt "Press Start 2P"';
-            ctx.fillStyle = '#00C800';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('you beat frogger', canvasWidth/2,canvasHeight/2);
+                ctx.save();
+                ctx.font = '20pt "Press Start 2P"';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('you beat frogger', canvasWidth/2,canvasHeight/2);
+                ctx.restore();
 
-
-
-
-
+            }, 250);
         }
-
     }
 };
 
