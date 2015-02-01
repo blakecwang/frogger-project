@@ -2,18 +2,6 @@
     visit url: http://blakecwang.github.io/frogger-project/
 */
 
-
-/* TO DO:
-- make splash screen between level-ups
-x download cool retro font
-- change game with level-ups
-    x scalability
-    x more cars
-    - different colors
-        x create artwork
-*/
-
-
 // overall dimension controls
 var blockUnit = 50;
 var blockWidth = 7;
@@ -63,7 +51,7 @@ var changeTextColor = function(lev) {
 
 
 // image controls
-var colorArray = ['white', 'green', 'yellow', 'orange', 'red', 'blue'];
+var colorArray = ['white.png', 'green.png', 'yellow.png', 'orange.png', 'red.png', 'blue.png'];
 var imgSrcArray = [
 'images/road.png',              // road - index 0
 'images/water_1_white.png',     // water1 - index 1
@@ -98,21 +86,10 @@ var pullImages = function() {
 pullImages();
 var imgInit = function(lev) {
     for (var i=1; i<imgSrcArray.length; i++) {
-        if (lev >= 2) {
-            var newSrc = imgSrcArray[i].replace(colorArray[lev-2], colorArray[lev-1]);
+            var splitArray = imgSrcArray[i].split("_");
+            var lastWord = splitArray[splitArray.length - 1];
+            var newSrc = imgSrcArray[i].replace(lastWord, colorArray[lev-1]);
             imgSrcArray[i] = newSrc;
-        } else {
-            waterImgSrc1 = whiteArray[1];
-            waterImgSrc2 = whiteArray[2];
-            waterImgSrc3 = whiteArray[3];
-            waterImgSrc4 = whiteArray[4];
-            grassImgSrc = whiteArray[5];
-            rCarImgSrc = whiteArray[6];
-            rTruckImgSrc = whiteArray[7];
-            lCarImgSrc = whiteArray[8];
-            lTruckImgSrc = whiteArray[9];
-            frogImgSrc = whiteArray[10];
-        }
     }
     pullImages();
 };
