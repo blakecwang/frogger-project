@@ -76,6 +76,10 @@ var imgSrcArray = [
 'images/car_left_white.png',    // left-car - index 8
 'images/truck_left_white.png',  // left-truck - index 9
 'images/frog_white.png'];       // frog - index 10
+var whiteArray = [];
+for (var i=0; i<imgSrcArray.length; i++) {
+    whiteArray.push(imgSrcArray[i]);
+}
 var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
     grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
 var pullImages = function() {
@@ -93,9 +97,22 @@ var pullImages = function() {
 };
 pullImages();
 var imgInit = function(lev) {
-    for (var i=0; i<imgSrcArray.length; i++) {
-        var str = imgSrcArray[i].replace('white', colorArray[lev-1]);
-        imgSrcArray[i] = str;
+    for (var i=1; i<imgSrcArray.length; i++) {
+        if (lev >= 2) {
+            var newSrc = imgSrcArray[i].replace(colorArray[lev-2], colorArray[lev-1]);
+            imgSrcArray[i] = newSrc;
+        } else {
+            waterImgSrc1 = whiteArray[1];
+            waterImgSrc2 = whiteArray[2];
+            waterImgSrc3 = whiteArray[3];
+            waterImgSrc4 = whiteArray[4];
+            grassImgSrc = whiteArray[5];
+            rCarImgSrc = whiteArray[6];
+            rTruckImgSrc = whiteArray[7];
+            lCarImgSrc = whiteArray[8];
+            lTruckImgSrc = whiteArray[9];
+            frogImgSrc = whiteArray[10];
+        }
     }
     pullImages();
 };
@@ -126,6 +143,7 @@ playerIncrement = blockUnit;
 // enemy start
 // initialize enemy objects
 var Enemy = function() {
+    imgInit(level);
     enemyInit();
     this.sprite = enemyImgSrc;
     this.x = enemyX;
@@ -169,13 +187,14 @@ Enemy.prototype.update = function(dt) {
         var enemyCX = this.x + tooClose;
 
         if (Math.abs(enemyCX-playerCX) <= tooClose) {
+            
+            levelInit(levelStart);
+            imgInit(levelStart);
+            changeTextColor(levelStart);
+
             playerInit();
             player.x = playerX;
             player.y = playerY;
-
-            levelInit(levelStart);
-
-            changeTextColor(level);
 
             enemyInit(level);
             enemyCount = difficultyFactor * level;
@@ -244,7 +263,7 @@ Player.prototype.update = function() {
             changeTextColor(level);
         }
         
-        imgInit(level); // when ommitted, enemies change to green at level 3
+        //imgInit(level); // when ommitted, enemies change to green at level 3
 
         playerInit();
         this.x = playerX;
