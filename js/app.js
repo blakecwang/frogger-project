@@ -2,12 +2,27 @@
     url: http://blakecwang.github.io/frogger-project/
 */
 
+// WebFontConfig = {
+//     google: { families: [ 'Press+Start+2P::latin' ] }
+// };
+// (function() {
+//     var wf = document.createElement('script');
+//     wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+//       '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+//     wf.type = 'text/javascript';
+//     wf.async = 'true';
+//     var s = document.getElementsByTagName('script')[0];
+//     s.parentNode.insertBefore(wf, s);
+// })();
+
+
 // overall dimension controls
+var canvasWidth = 500;
+var canvasHeight = 400;
 var blockUnit = 50;
-var blockWidth = 7;
-var blockHeight = 7;
-var canvasWidth = blockWidth*blockUnit;
-var canvasHeight = blockHeight*blockUnit;
+var blockWidth = canvasWidth / blockUnit;
+var blockHeight = canvasHeight / blockUnit;
+var stopGame = false;
 
 
 // set a loop timer for water movement
@@ -64,10 +79,6 @@ var imgSrcArray = [
 'images/car_left_white.png',    // left-car - index 8
 'images/truck_left_white.png',  // left-truck - index 9
 'images/frog_white.png'];       // frog - index 10
-var whiteArray = [];
-for (var i=0; i<imgSrcArray.length; i++) {
-    whiteArray.push(imgSrcArray[i]);
-}
 var roadImgSrc, waterImgSrc1, waterImgSrc2, waterImgSrc3, waterImgSrc4,
     grassImgSrc, carImgSrc, truckImgSrc, frogImgSrc;
 var pullImages = function() {
@@ -101,17 +112,20 @@ enemyInit = function(lev) {
     enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 4) + 6];
     enemyX = -blockUnit + Math.random() * (canvasWidth + 2*blockUnit);
     enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
-    enemySpeed = Math.random() * 150 + 100;
+    enemySpeed = Math.random() * 200 + 100;
+    enemySpeed = 30;
 };
-difficultyFactor = 2;
-//enemyDirection = 1;
+difficultyFactor = 3;
 enemyCount = difficultyFactor * levelStart;
 
 
 // player controls
 var playerX, playerY, playerIncrement;
 playerInit = function() {
-    playerX = (canvasWidth / 2) - (blockUnit / 2);
+    playerX = (canvasWidth / 2)
+    if ((canvasWidth/blockUnit)%2 === 1) {
+         playerX -= (blockUnit / 2);
+    }
     playerY = blockUnit * (blockHeight - 1);
 };
 playerIncrement = blockUnit;
@@ -198,7 +212,7 @@ Enemy.prototype.render = function() {
 // initialize player objects
 var Player = function() {
     playerInit();
-    this.sprite = imgSrcArray[7];
+    this.sprite = frogImgSrc;
     this.x = playerX;
     this.y = playerY;
 };
@@ -232,23 +246,42 @@ Player.prototype.update = function() {
 
     // handle level-ups
     if (this.y === 0) {
+        if (level < 6) {
+            level++;
+            levelInit(level);
 
-        level++;
-        levelInit(level);
+            changeTextColor(level);
 
-        changeTextColor(level);
-        
-        //imgInit(level); // when ommitted, enemies change to green at level 3
+            playerInit();
+            this.x = playerX;
+            this.y = playerY;
 
-        playerInit();
-        this.x = playerX;
-        this.y = playerY;
+            enemyCount = difficultyFactor * level;
+            allEnemies = [];
+            for (var i=0; i<enemyCount; i++) {
+                allEnemies.push(new Enemy());
+            }
+        } else {
+            stopGame = true;
 
-        enemyCount = difficultyFactor * level;
-        allEnemies = [];
-        for (var i=0; i<enemyCount; i++) {
-            allEnemies.push(new Enemy());
+            // setInterval(function() {
+
+            // })
+
+            ctx.drawImage(Resources.get('images/frog_white.png'),
+                canvasWidth/2-canvasHeight/2,0, canvasHeight,canvasHeight);
+            ctx.font = '40pt "Press Start 2P"';
+            ctx.fillStyle = '#00C800';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('you beat frogger', canvasWidth/2,canvasHeight/2);
+
+
+
+
+
         }
+
     }
 };
 
