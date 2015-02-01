@@ -2,19 +2,6 @@
     url: http://blakecwang.github.io/frogger-project/
 */
 
-// WebFontConfig = {
-//     google: { families: [ 'Press+Start+2P::latin' ] }
-// };
-// (function() {
-//     var wf = document.createElement('script');
-//     wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-//       '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-//     wf.type = 'text/javascript';
-//     wf.async = 'true';
-//     var s = document.getElementsByTagName('script')[0];
-//     s.parentNode.insertBefore(wf, s);
-// })();
-
 
 // overall dimension controls
 var canvasWidth = 500;
@@ -109,8 +96,8 @@ enemyInit = function(lev) {
     enemyImgSrc = imgSrcArray[Math.floor(Math.random() * 4) + 6];
     enemyX = -blockUnit + Math.random() * (canvasWidth + 2*blockUnit);
     enemyY = blockUnit * (Math.floor((Math.random() * (blockHeight-2)) + 1));
-    enemySpeed = Math.random() * 200 + 100;
-    enemySpeed = 30;
+    enemySpeed = Math.random() * 300 + 30;
+//    enemySpeed = 30;
 };
 difficultyFactor = 3;
 enemyCount = difficultyFactor * levelStart;
