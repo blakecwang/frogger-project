@@ -10,6 +10,7 @@ var blockUnit = 50;
 var blockWidth = canvasWidth / blockUnit;
 var blockHeight = canvasHeight / blockUnit;
 var stopGame = false;
+var pauseGame = false;
 
 
 // set a loop timer for water movement
@@ -204,48 +205,55 @@ var Player = function() {
 
 // update player position
 Player.prototype.update = function() {
-    switch (this.keyPressed) {
-    case 'left':
-        if (this.x > 0) {
-            this.x -= playerIncrement;
+    var self = this;
+        switch (this.keyPressed) {
+        case 'left':
+            if (this.x > 0) {
+                this.x -= playerIncrement;
+            }
+            break;
+        case 'up':
+            if (this.y > 0) {
+                this.y -= playerIncrement;
+            }
+            break;
+        case 'right':
+            if (this.x < canvasWidth - blockUnit) {
+                this.x += playerIncrement;
+            }
+            break;
+        case 'down':
+            if (this.y < canvasHeight - blockUnit) {
+                this.y += playerIncrement;
+            }
+            break;
         }
-        break;
-    case 'up':
-        if (this.y > 0) {
-            this.y -= playerIncrement;
-        }
-        break;
-    case 'right':
-        if (this.x < canvasWidth - blockUnit) {
-            this.x += playerIncrement;
-        }
-        break;
-    case 'down':
-        if (this.y < canvasHeight - blockUnit) {
-            this.y += playerIncrement;
-        }
-        break;
-    }
     this.keyPressed = '';
 
     // handle level-ups
     if (this.y === 0) {
 
         if (level < 6) {
-            level++;
+            pauseGame = true;
+            setTimeout(function() {
+                level++;
 
-            levelInit(level);
-            changeTextColor(level);
+                levelInit(level);
+                changeTextColor(level);
 
-            playerInit();
-            this.x = playerX;
-            this.y = playerY;
+                playerInit();
+                self.x = playerX;
+                self.y = playerY;
 
-            enemyCount = difficultyFactor * level;
-            allEnemies = [];
-            for (var i=0; i<enemyCount; i++) {
-                allEnemies.push(new Enemy());
-            }
+                enemyCount = difficultyFactor * level;
+                allEnemies = [];
+                for (var i=0; i<enemyCount; i++) {
+                    allEnemies.push(new Enemy());
+                }
+                pauseGame = false;
+
+            }, 1000);
+    
         } else {
             stopGame = true;
 
