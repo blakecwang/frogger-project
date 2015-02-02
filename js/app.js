@@ -4,7 +4,7 @@
 
 
 // overall dimension controls
-var canvasWidth = 500;
+var canvasWidth = 550;
 var canvasHeight = 400;
 var blockUnit = 50;
 var blockWidth = canvasWidth / blockUnit;
